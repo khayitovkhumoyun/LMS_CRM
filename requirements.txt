@@ -1,12 +1,16 @@
-Django~=4.2.6
-djangorestframework~=3.14.0
-asgiref       ~=                3.7.2
-Django         ~=               4.2.6
+asgiref              ~=         3.7.2
+Django                ~=        4.2.6
 djangorestframework     ~=      3.14.0
-djangorestframework-simplejwt ~= 5.3.0
-pip                    ~=       23.0.1
-PyJWT                   ~=      2.8.0
-pytz                 ~=         2023.3.post1
-setuptools            ~=        58.1.0
-sqlparse               ~=       0.4.4
-typing_extensions       ~=      4.8.0
+djangorestframework-simplejwt ~=5.3.0
+drf-yasg                   ~=   1.21.7
+inflection                ~=    0.5.1
+packaging                ~=     23.2
+pip                       ~=    23.0.1
+PyJWT                      ~=   2.8.0
+pytz                       ~=   2023.3.post1
+PyYAML                      ~=   6.0.1
+setuptools                  ~=   58.1.0
+sqlparse                   ~=    0.4.4
+typing_extensions         ~=     4.8.0
+uritemplate               ~=     4.1.1
+

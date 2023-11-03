@@ -12,8 +12,11 @@ SECRET_KEY = 'django-insecure-m(yr2z8d=&yr$&pcpbg@!+uqj9pp#ljkv6nt3im&0=po#whi_l
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-
+CORS_ALLOW_ALL_ORIGINS: True
 ALLOWED_HOSTS = ['*']
+CSRF_TRUSTED_ORIGINS = [
+    "http://185.217.131.221",
+]
 
 # Application definition
 
@@ -28,6 +31,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework_simplejwt',
     'drf_yasg',
+    "corsheaders",
 ]
 
 MIDDLEWARE = [
@@ -38,11 +42,12 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    "corsheaders.middleware.CorsMiddleware",
+    "django.middleware.common.CommonMiddleware",
 ]
 SWAGGER_SETTINGS = {
-   'DEFAULT_INFO': 'import.path.to.urls.api_info',
+    'DEFAULT_INFO': 'import.path.to.urls.api_info',
 }
-
 
 REST_FRAMEWORK = {
 
@@ -125,5 +130,22 @@ STATIC_URL = 'static/'
 AUTH_USER_MODEL = 'configApp.User'
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
+
+CORS_ALLOW_METHODS = (
+    "DELETE",
+    "GET",
+    "OPTIONS",
+    "PATCH",
+    "POST",
+    "PUT",
+)
+CORS_ALLOW_HEADERS = (
+    "accept",
+    "authorization",
+    "content-type",
+    "user-agent",
+    "x-csrftoken",
+    "x-requested-with",
+)
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'

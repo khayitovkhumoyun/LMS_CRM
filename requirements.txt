@@ -13,4 +13,5 @@ setuptools                  ~=   58.1.0
 sqlparse                   ~=    0.4.4
 typing_extensions         ~=     4.8.0
 uritemplate               ~=     4.1.1
+django-cors-headers      ~=      4.3.0
 

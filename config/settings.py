@@ -43,11 +43,11 @@ MIDDLEWARE = [
 
 ]
 
-MIDDLEWARE_CLASSES = [
-    "corsheaders.middleware.CorsMiddleware",
-    "django.middleware.csrf.CsrfViewMiddleware",
-    "corsheaders.middleware.CorsPostCsrfMiddleware",
-]
+# MIDDLEWARE_CLASSES = [
+#     "corsheaders.middleware.CorsMiddleware",
+#     "django.middleware.csrf.CsrfViewMiddleware",
+#     "corsheaders.middleware.CorsPostCsrfMiddleware",
+# ]
 
 SWAGGER_SETTINGS = {
     'DEFAULT_INFO': 'import.path.to.urls.api_info',

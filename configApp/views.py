@@ -2,6 +2,7 @@ import random
 from django.core.cache import cache
 from django.shortcuts import render
 from rest_framework import generics, permissions, status
+from rest_framework.pagination import PageNumberPagination
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from .models import *
@@ -44,6 +45,7 @@ def send_otp(phone):
 
 
 class VerifySms(APIView):
+    pagination_class = PageNumberPagination
 
     def post(self, request):
         serializer = VerifySMSSerializer(data=request.data)
@@ -90,13 +92,15 @@ class ChangePasswordView(APIView):
 
 
 class DepartmentsApiView(ModelViewSet):
-    queryset = Departments.objects.all()
+    queryset = Departments.objects.all().order_by('-id')
     serializer_class = DepartmentsSerializer
+    pagination_class = PageNumberPagination
 
 
 class CourseApiView(ModelViewSet):
-    queryset = Course.objects.all()
+    queryset = Course.objects.all().order_by('-id')
     serializer_class = CourseSerializer
+    pagination_class = PageNumberPagination
 
 
 class TeacherApiView(APIView):
@@ -113,12 +117,15 @@ class TeacherApiView(APIView):
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def get(self, request):
-        teacher = Worker.objects.filter(user__is_teacher=True)
+        pagination_class = PageNumberPagination
+        teacher = Worker.objects.filter(user__is_teacher=True).order_by('-id')
         serializer = WorkerSerializer(instance=teacher, many=True)
         return Response(data=serializer.data)
 
 
 class WorkerApiView(APIView):
+    pagination_class = PageNumberPagination
+
     def post(self, request):
         serializer = WorkerSerializer(data=request.data)
         if serializer.is_valid(raise_exception=True):
@@ -132,7 +139,8 @@ class WorkerApiView(APIView):
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def get(self, request):
-        worker = Worker.objects.filter(user__is_staff=True)
+
+        worker = Worker.objects.filter(user__is_staff=True).order_by('-id')
         serializer = WorkerSerializer(worker, many=True)
         return Response(data=serializer.data)
 
@@ -168,6 +176,8 @@ class WorkerApiViewId(APIView):
 
 
 class WorkerApiView(APIView):
+    pagination_class = PageNumberPagination
+
     def post(self, request):
         serializer = WorkerSerializer(data=request.data)
         if serializer.is_valid(raise_exception=True):
@@ -181,22 +191,26 @@ class WorkerApiView(APIView):
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def get(self, request):
-        worker = Worker.objects.filter(user__is_staff=True)
+        worker = Worker.objects.filter(user__is_staff=True).order_by('-id')
         serializer = WorkerSerializer(worker, many=True)
         return Response(data=serializer.data)
 
 
 class RoomAPIView(ModelViewSet):
-    queryset = Rooms.objects.all()
+    queryset = Rooms.objects.all().order_by('-id')
     serializer_class = RoomSerializer
+    pagination_class = PageNumberPagination
 
 
 class DayAPIView(ModelViewSet):
-    queryset = Day.objects.all()
+    queryset = Day.objects.all().order_by('-id')
     serializer_class = DaySerializer
+    pagination_class = PageNumberPagination
 
 
 class WorkerApiView(APIView):
+    pagination_class = PageNumberPagination
+
     def post(self, request):
         serializer = WorkerSerializer(data=request.data)
         if serializer.is_valid(raise_exception=True):
@@ -210,12 +224,14 @@ class WorkerApiView(APIView):
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def get(self, request):
-        worker = Worker.objects.filter(user__is_staff=True)
+        worker = Worker.objects.filter(user__is_staff=True).order_by('-id')
         serializer = WorkerSerializer(worker, many=True)
         return Response(data=serializer.data)
 
 
 class StudentApiView(APIView):
+    pagination_class = PageNumberPagination
+
     def post(self, request):
         serializer = StudentSerializer(data=request.data)
         if serializer.is_valid(raise_exception=True):
@@ -229,7 +245,7 @@ class StudentApiView(APIView):
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def get(self, request):
-        student = Student.objects.filter(user__is_student=True)
+        student = Student.objects.filter(user__is_student=True).order_by('-id')
         serializer = StudentSerializer(student, many=True)
         return Response(data=serializer.data)
 
@@ -265,35 +281,42 @@ class StudentApiViewId(APIView):
 
 
 class GroupApiView(ModelViewSet):
-    queryset = Group.objects.all()
+    pagination_class = PageNumberPagination
+    queryset = Group.objects.all().order_by('-id')
     serializer_class = GroupSerializer
 
 
 class TableTypeApi(ModelViewSet):
-    queryset = TableType.objects.all()
+    pagination_class = PageNumberPagination
+    queryset = TableType.objects.all().order_by('-id')
     serializer_class = TableTypeSerializer
 
 
 class TableApi(ModelViewSet):
-    queryset = Table.objects.all()
+    pagination_class = PageNumberPagination
+    queryset = Table.objects.all().order_by('-id')
     serializer_class = TableSerializer
 
 
 class TopicsApi(ModelViewSet):
-    queryset = Topics.objects.all()
+    queryset = Topics.objects.all().order_by('-id')
     serializer_class = TopicsSerializer
+    pagination_class = PageNumberPagination
 
 
 class GroupHomeWorkApi(ModelViewSet):
-    queryset = GroupHomeWork.objects.all()
+    pagination_class = PageNumberPagination
+    queryset = GroupHomeWork.objects.all().order_by('-id')
     serializer_class = GroupHomeWorkSerializer
 
 
 class HomeWorkApi(ModelViewSet):
-    queryset = HomeWork.objects.all()
+    queryset = HomeWork.objects.all().order_by('-id')
     serializer_class = HomeWorkSerializer
+    pagination_class = PageNumberPagination
 
 
 class AttendanceLevelApi(ModelViewSet):
-    queryset = AttendanceLevel.objects.all()
+    queryset = AttendanceLevel.objects.all().order_by('-id')
     serializer_class = AttendanceLevelSerializer
+    pagination_class = PageNumberPagination

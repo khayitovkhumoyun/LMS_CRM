@@ -246,8 +246,17 @@ class StudentApiView(APIView):
 
     def get(self, request):
         student = Student.objects.filter(user__is_student=True).order_by('-id')
-        serializer = StudentSerializer(student, many=True)
-        return Response(data=serializer.data)
+        group = Group.objects.all().order_by('-id')
+        course = Course.objects.all().order_by('-id')
+        serializer_student = StudentSerializer(student, many=True)
+        serializer_group = GroupSerializer(group, many=True)
+        serializer_course = CourseSerializer(course, many=True)
+        data = {
+            "students": serializer_student.data,
+            "groups": serializer_group.data,
+            "courses": serializer_course.data
+        }
+        return Response(data=data)
 
 
 class StudentApiViewId(APIView):
@@ -280,10 +289,32 @@ class StudentApiViewId(APIView):
             return Response(data={'error': e})
 
 
+# group uchun crud
 class GroupApiView(ModelViewSet):
     pagination_class = PageNumberPagination
     queryset = Group.objects.all().order_by('-id')
     serializer_class = GroupSerializer
+
+
+# groupning get method , frontend shuni Apini ishladadi
+class GroupApi(APIView):
+    pagination_class = PageNumberPagination
+
+    def get(self, request):
+        teachers = Worker.objects.filter(user__is_teacher=True).order_by('-id')
+        courses = Course.objects.all().order_by('-id')
+        tables = Table.objects.all().order_by('-id')
+        serializer_teachers = WorkerSerializer(teachers, many=True)
+        serializer_courses = CourseSerializer(courses, many=True)
+        serializer_table = TableSerializer(tables, many=True)
+
+        datas = {
+            "teachers": serializer_teachers.data,
+            "courses": serializer_courses.data,
+            "tables": serializer_table.data
+        }
+
+        return Response(data=datas)
 
 
 class TableTypeApi(ModelViewSet):

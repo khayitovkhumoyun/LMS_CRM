@@ -20,7 +20,7 @@ router.register(r'groupHome', GroupHomeWorkApi)
 router.register(r'topic', TopicsApi)
 # uyga fazifa
 router.register(r'homeWork', HomeWorkApi)
-#yuqlama
+# yuqlama
 router.register(r'attendanceLevel', AttendanceLevelApi)
 urlpatterns = [
     path('', include(router.urls)),
@@ -33,6 +33,6 @@ urlpatterns = [
     path('workerId/<int:pk>/', WorkerApiViewId.as_view()),
     path('student/', StudentApiView.as_view()),
     path('student/<int:pk>/', StudentApiViewId.as_view()),
-    # path('topicNumber/', TopicsApi.as_view()),
+    path('group_get/', GroupApi.as_view()),
 
 ]

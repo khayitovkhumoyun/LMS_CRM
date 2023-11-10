@@ -94,8 +94,6 @@ class TableTypeSerializer(serializers.ModelSerializer):
 
 
 class TableSerializer(serializers.ModelSerializer):
-    room = RoomSerializer()
-    type = TableTypeSerializer()
 
     class Meta:
         model = Table

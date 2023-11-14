@@ -68,6 +68,7 @@ class VerifySms(APIView):
 
 
 class RegisterUserApi(APIView):
+    pagination_class = PageNumberPagination
     def post(self, request):
         serializer = UserSerializer(data=request.data)
         if serializer.is_valid(raise_exception=True):
@@ -78,6 +79,11 @@ class RegisterUserApi(APIView):
                 'status': True,
                 'datail': 'Account create'
             })
+
+    def get(self, request):
+        users = User.objects.all().order_by('-id')
+        serializer = UserSerializer(users, many=True)
+        return Response(data=serializer.data)
 
 
 class ChangePasswordView(APIView):

@@ -24,12 +24,12 @@ router.register(r'homeWork', HomeWorkApi)
 router.register(r'attendanceLevel', AttendanceLevelApi)
 urlpatterns = [
     path('', include(router.urls)),
-    path('register_user/', RegisterUserApi.as_view()),
+    path('userApi/', RegisterUserApi.as_view()),
     path('refresh_password/', ChangePasswordView.as_view()),
     path('sentOTP/', PhoneSendOTP.as_view()),
     path('sentOTP_and_phone/', VerifySms.as_view()),
-    path('add_teacher/', TeacherApiView.as_view()),
-    path('add_worker/', WorkerApiView.as_view()),
+    path('teacherAPI/', TeacherApiView.as_view()),
+    path('workerAPI/', WorkerApiView.as_view()),
     path('workerId/<int:pk>/', WorkerApiViewId.as_view()),
     path('student/', StudentApiView.as_view()),
     path('student/<int:pk>/', StudentApiViewId.as_view()),

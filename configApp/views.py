@@ -1,6 +1,7 @@
 import random
 from django.core.cache import cache
 from django.shortcuts import render
+from drf_yasg.utils import swagger_auto_schema
 from rest_framework import generics, permissions, status
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.response import Response
@@ -12,6 +13,7 @@ from rest_framework.viewsets import ModelViewSet
 
 
 class PhoneSendOTP(APIView):
+    @swagger_auto_schema(request_body=SMSSerializer)
     def post(self, request, *args, **kwargs):
         phone_number = request.data.get('phone_number')
         print(phone_number)
@@ -47,6 +49,7 @@ def send_otp(phone):
 class VerifySms(APIView):
     pagination_class = PageNumberPagination
 
+    @swagger_auto_schema(request_body=VerifySMSSerializer)
     def post(self, request):
         serializer = VerifySMSSerializer(data=request.data)
         if serializer.is_valid():
@@ -69,6 +72,8 @@ class VerifySms(APIView):
 
 class RegisterUserApi(APIView):
     pagination_class = PageNumberPagination
+
+    @swagger_auto_schema(request_body=UserSerializer)
     def post(self, request):
         serializer = UserSerializer(data=request.data)
         if serializer.is_valid(raise_exception=True):

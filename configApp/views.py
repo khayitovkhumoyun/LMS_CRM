@@ -94,6 +94,7 @@ class RegisterUserApi(APIView):
 class ChangePasswordView(APIView):
     permission_classes = (permissions.IsAuthenticated,)
 
+    @swagger_auto_schema(request_body=ChangePasswordSerializer)
     def patch(self, request, *args, **kwargs):
         serializer = ChangePasswordSerializer(instance=self.request.user, data=request.data)
         if serializer.is_valid(raise_exception=True):
@@ -115,20 +116,26 @@ class CourseApiView(ModelViewSet):
 
 
 class TeacherApiView(APIView):
+    pagination_class = PageNumberPagination
+
+    @swagger_auto_schema(request_body=WorkerSerializer)
     def post(self, request):
         serializer = WorkerSerializer(data=request.data)
         if serializer.is_valid(raise_exception=True):
-            user_id = serializer.validated_data.get('user')
-            user = User.objects.get(phone=user_id)
-            user.is_teacher = 1
-            user.save()
-            serializer.save()
+            user_id = str(serializer.validated_data.get('user'))
+            try:
+                user = User.objects.get(phone=user_id)
+                user.is_teacher = True
+                user.save()
+                serializer.save()
+
+            except Exception as e:
+                print(e)
             return Response(data=serializer.data)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def get(self, request):
-        pagination_class = PageNumberPagination
         teacher = Worker.objects.filter(user__is_teacher=True).order_by('-id')
         serializer = WorkerSerializer(instance=teacher, many=True)
         return Response(data=serializer.data)
@@ -137,11 +144,13 @@ class TeacherApiView(APIView):
 class WorkerApiView(APIView):
     pagination_class = PageNumberPagination
 
+    @swagger_auto_schema(request_body=ChangePasswordSerializer)
     def post(self, request):
         serializer = WorkerSerializer(data=request.data)
         if serializer.is_valid(raise_exception=True):
             user_id = serializer.validated_data.get('user')
-            user = User.objects.get(phone=user_id)
+
+            user = User.objects.get(phone=f"{user_id}")
             user.is_staff = True
             user.save()
             serializer.save()
@@ -189,6 +198,7 @@ class WorkerApiViewId(APIView):
 class WorkerApiView(APIView):
     pagination_class = PageNumberPagination
 
+    @swagger_auto_schema(request_body=WorkerSerializer)
     def post(self, request):
         serializer = WorkerSerializer(data=request.data)
         if serializer.is_valid(raise_exception=True):
@@ -222,6 +232,7 @@ class DayAPIView(ModelViewSet):
 class WorkerApiView(APIView):
     pagination_class = PageNumberPagination
 
+    @swagger_auto_schema(request_body=WorkerSerializer)
     def post(self, request):
         serializer = WorkerSerializer(data=request.data)
         if serializer.is_valid(raise_exception=True):
@@ -243,6 +254,7 @@ class WorkerApiView(APIView):
 class StudentApiView(APIView):
     pagination_class = PageNumberPagination
 
+    @swagger_auto_schema(request_body=StudentSerializer)
     def post(self, request):
         serializer = StudentSerializer(data=request.data)
         if serializer.is_valid(raise_exception=True):

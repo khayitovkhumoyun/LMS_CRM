@@ -5,7 +5,7 @@ from .models import *
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ('id', 'phone', 'password', 'is_active', 'is_staff', 'is_admin', 'is_student')
+        fields = ('id', 'phone', 'password', 'is_active', 'is_staff', "is_teacher",'is_admin', 'is_student')
 
 
 class ChangePasswordSerializer(serializers.ModelSerializer):
@@ -62,7 +62,7 @@ class DepartmentsSerializer(serializers.ModelSerializer):
 
 
 class WorkerSerializer(serializers.ModelSerializer):
-    user = UserSerializer()
+
 
     class Meta:
         model = Worker

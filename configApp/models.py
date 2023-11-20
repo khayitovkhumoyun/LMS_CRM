@@ -107,6 +107,7 @@ class Parents(models.Model):
 
 
 #
+
 class Day(models.Model):
     title = models.CharField(max_length=50)
     descriptions = models.CharField(max_length=500, blank=True, null=True)
